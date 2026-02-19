@@ -1,0 +1,29 @@
+# Enterprise AI Control Plane - Python dependencies
+
+# Web framework
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-multipart==0.0.20
+
+# Data validation
+pydantic==2.10.4
+pydantic-settings==2.7.0
+
+# Database (async PostgreSQL)
+asyncpg==0.30.0
+
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# HTTP client (Ollama backend)
+httpx==0.28.1
+
+# OpenAI SDK
+openai==1.58.1
+
+# YAML policy parsing
+pyyaml==6.0.2
+
+# Utilities
+python-dotenv==1.0.1
