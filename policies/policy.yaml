@@ -1,0 +1,40 @@
+# Enterprise AI Control Plane - Role-Based Access Policy
+# Defines which models each role can access and their token limits.
+
+roles:
+  admin:
+    allowed_models:
+      - gpt-4o
+      - gpt-4o-mini
+      - gpt-4-turbo
+      - gpt-4
+      - gpt-3.5-turbo
+      - llama3
+      - mistral
+      - phi3
+      - gemma
+    max_tokens: 4096
+
+  developer:
+    allowed_models:
+      - gpt-4o-mini
+      - gpt-3.5-turbo
+      - llama3
+      - mistral
+      - phi3
+    max_tokens: 2048
+
+  viewer:
+    allowed_models:
+      - gpt-3.5-turbo
+      - llama3
+    max_tokens: 512
+
+# Cost thresholds (informational, not yet enforced)
+cost_limits:
+  admin:
+    daily_usd: 100.0
+  developer:
+    daily_usd: 10.0
+  viewer:
+    daily_usd: 1.0
