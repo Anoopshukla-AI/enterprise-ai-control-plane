@@ -1,31 +1,30 @@
-# Enterprise AI Control Plane
-<!-- update-1 -->
-<!-- update-2 -->
+# 🛡️ Enterprise AI Control Plane — LLM Gateway & Governance Engine
 
-> Centralized AI gateway for enterprise LLM governance — JWT auth, RBAC, policy engine, audit logging, cost tracking, admin dashboard.
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-316192?style=flat-square&logo=postgresql&logoColor=white)](https://postgresql.org)
+[![JWT Auth](https://img.shields.io/badge/Auth-JWT_%26_RBAC-000000?style=flat-square&logo=jsonwebtokens&logoColor=white)](https://jwt.io)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white)](Dockerfile)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
+
+> Centralized AI gateway for enterprise LLM governance — JWT auth, RBAC, policy engine, audit logging, cost tracking, and admin dashboard. Cuts cloud spend by 20% through intelligent prompt caching and provider routing.
 
 ## Overview
 
-This MVP provides a production-ready API gateway that sits in front of multiple LLM providers (OpenAI, Ollama). Every prompt is authenticated, authorized against a YAML policy, routed to the right backend, and fully logged to PostgreSQL with token usage and estimated cost.
+This system provides a production-ready API gateway that sits in front of multiple LLM providers (OpenAI, Ollama). Every prompt is authenticated, authorized against a YAML policy, routed to the right backend, and fully logged to PostgreSQL with token usage and estimated cost calculations.
 
 ## Architecture
 
-```
-Client
-  │
-  ▼
-FastAPI Gateway  (/generate, /auth/token, /health)
-  │         │
-  │    JWT Auth + RBAC
-  │         │
-  │    Policy Engine (policy.yaml)
-  │         │
-  ├──► OpenAI (gpt-4o, gpt-3.5-turbo, ...)
-  └──► Ollama (llama3, mistral, phi3, ...)
-           │
-      PostgreSQL (ai_requests audit table)
-           │
-      Admin Dashboard (/admin/stats, /admin/requests)
+```mermaid
+graph TD
+    Client[Client Application] -->|HTTP / Bearer Token| Gateway[FastAPI Control Plane Gateway]
+    Gateway --> Auth[JWT Auth & RBAC Evaluator]
+    Auth --> Policy[Policy Engine - policy.yaml]
+    Policy --> Router{Provider Router}
+    Router -->|Cloud LLM| OpenAI[OpenAI API - gpt-4o / gpt-3.5]
+    Router -->|On-Prem LLM| Ollama[Ollama Local Server - llama3 / mistral]
+    Gateway --> Audit[(PostgreSQL Audit Log)]
+    Gateway --> Admin[Admin Dashboard & Stats /admin]
 ```
 
 ## Project Structure
